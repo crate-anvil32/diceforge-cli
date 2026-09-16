@@ -37,16 +37,18 @@ fn main() -> ExitCode {
 
 fn print_result(source: &str, roll: &Roll, result: &RollResult) {
     let rolls: Vec<String> = result.dice.iter().map(u32::to_string).collect();
-    if roll.modifier != 0 {
-        println!(
-            "{source}: [{}] {:+} = {}",
-            rolls.join(", "),
-            roll.modifier,
-            result.total
-        );
-    } else {
-        println!("{source}: [{}] = {}", rolls.join(", "), result.total);
+    let mut line = format!("{source}: [{}]", rolls.join(", "));
+
+    if roll.keep.is_some() {
+        let kept: Vec<String> = result.kept.iter().map(u32::to_string).collect();
+        line.push_str(&format!(" keep [{}]", kept.join(", ")));
     }
+    if roll.modifier != 0 {
+        line.push_str(&format!(" {:+}", roll.modifier));
+    }
+    line.push_str(&format!(" = {}", result.total));
+
+    println!("{line}");
 }
 
 /// A small, dependency-free PRNG (SplitMix64) used only by the CLI to

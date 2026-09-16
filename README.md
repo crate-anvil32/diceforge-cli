@@ -50,19 +50,25 @@ $ cargo run -- 3d6+2
 $ cargo run -- 1d20 2d4-1
 1d20: [17] = 17
 2d4-1: [3, 2] -1 = 4
+
+$ cargo run -- 4d6kh3
+4d6kh3: [5, 2, 6, 1] keep [6, 5, 2] = 13
 ```
 
 ## Notation supported
 
 - `NdM` - roll N dice with M sides (`3d6`)
 - `dM` - shorthand for `1dM` (`d20`)
+- `NdMkhK` - roll N dice, keep only the highest K (`4d6kh3`)
+- `NdMklK` - roll N dice, keep only the lowest K (`2d20kl1`)
 - `NdM+K` / `NdM-K` - flat modifier added or subtracted (`2d4+3`)
+- keep and modifier can combine, in that order (`4d6kh3+2`)
 
 ## Status
 
-Early skeleton. Parsing and evaluation work and are unit tested;
-nothing more elaborate (keep-highest, exploding dice, dice pools) is
-implemented yet.
+Early skeleton. Parsing and evaluation work and are unit tested, and
+keep-highest/keep-lowest is implemented. Exploding dice and dice pools
+are not implemented yet.
 
 ## License
 
